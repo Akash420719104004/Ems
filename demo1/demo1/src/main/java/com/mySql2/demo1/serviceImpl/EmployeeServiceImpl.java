@@ -12,39 +12,6 @@ import java.util.Optional;
 public class  EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
-//    @Override
-//    public String addEmployee(EmployeeDto employeeDto) {
-//        if (employeeDto.getId() == null) {
-//            Optional<Employee> savedEmployee = employeeRepository.findByEmailAndMobile(employeeDto.getMobileNo(), employeeDto.getName());
-//            if (savedEmployee.isPresent()) {
-//                if (savedEmployee.get().getMobileNo().equals(employeeDto.getMobileNo())) {
-//                    throw new RuntimeException("Mobile No Already Exits");
-//                } else if (savedEmployee.get().getName().equals(employeeDto.getName())) {
-//                    throw new RuntimeException("Name Already Exits");
-//                }
-//            }
-//        }
-//        try {
-//            Employee employee = employeeRepository.findById(employeeDto.getId()).orElse(new Employee());
-//            boolean isNewUser = employee.getId() == null;
-//            employee.setName(employeeDto.getName());
-//            employee.setMobileNo(employeeDto.getMobileNo());
-//            if (isNewUser) {
-//                employee.setCreatedAt(String.valueOf(LocalDateTime.now()));
-//                if (employeeDto.getCreatedBy() != null && !employeeDto.getCreatedBy().isEmpty()) {
-//                    employee.setCreatedBy(employeeDto.getCreatedBy());
-//                }
-//            } else {
-//                employee.setUpdatedAt(String.valueOf(LocalDateTime.now()));
-//                employee.setUpdatedBy(employeeDto.getUpdatedBy());
-//            }
-//            employeeRepository.save(employee);
-//            return "Employee Added Successfully";
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     @Override
     public SuccessResponse<Object> addEmployees(EmployeeDto employeeDto) {
         try {
@@ -74,18 +41,5 @@ public class  EmployeeServiceImpl implements EmployeeService {
         }
     }
 }
-
-
-
-    /*@Override
-    public EmployeeResponseDto getmobileNoByName(String mobileNo) {
-        EmployeeResponseDto employee = employeeRepository.findByMobileNo(mobileNo);
-            EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
-            employeeResponseDto.setId(employee.getId());
-            employeeResponseDto.setMobileNo(employee.getMobileNo());
-            employeeResponseDto.setName(employee.getName());
-            return employeeResponseDto;
-        }
-    }*/
 
 

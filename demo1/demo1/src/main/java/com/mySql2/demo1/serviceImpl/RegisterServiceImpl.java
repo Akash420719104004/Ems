@@ -42,42 +42,6 @@ public class RegisterServiceImpl implements RegisterService {
         registerUser.setMobileNo(registerDto.getMobileNo());
         registerUser.setAddress(registerDto.getAddress());
         registerRepository.save(registerUser);
-
-//        if (registerDto.getId() != null && registerDto.getId() == 0) {
-//            sentMailForRegistration(registerUser);
-//        }
         return response;
-
     }
-
-
-
-
-//private void sentMailForRegistration(RegisterUser registerUser) throws MessagingException, IOException {
-//    MimeMessage mimeMessage = java.createMimeMessage();
-//    MimeMessageHelper simpleMailMessage = new MimeMessageHelper(mimeMessage, true);
-//
-//    simpleMailMessage.setFrom(username);
-//    simpleMailMessage.setTo(new String[]{"naveetha.s@cavininfotech.com","parthiban.ponraj@coherent.in"});
-//    simpleMailMessage.setSubject("New registration for Livewire Application");
-//
-//    Map<String, String> map = new LinkedHashMap<>();
-//    map.put("name", registerUser.getName());
-//    map.put("email", registerUser.getEmailId());
-//    map.put("userType", registerUser.getUserType());
-//    map.put("mobileNo", registerUser.getMobileNo());
-//    map.put("address", registerUser.getAddress());
-//
-//    String content = geContentFromTemplateForStatusUpdate(map);
-//    simpleMailMessage.setText(content, true);
-//
-//    javaMailSender.send(mimeMessage);
-//}
-//public String geContentFromTemplateForStatusUpdate(Map<String, String> data) throws IOException {
-//    String template = resourceLoader.getResource("classpath:registration_template.html").getContentAsString(Charset.defaultCharset());
-//    for (Map.Entry<String, String> entry : data.entrySet()) {
-//        template = template.replace("{{" + entry.getKey() + "}}", entry.getValue());
-//    }
-//    return template;
-//}
 }
