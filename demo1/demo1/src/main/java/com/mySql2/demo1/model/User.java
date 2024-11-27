@@ -115,6 +115,8 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     private UserDeviceId userDeviceId;
+    @ManyToOne
+    private Employee employee;
 
     @PrePersist
     @PreUpdate

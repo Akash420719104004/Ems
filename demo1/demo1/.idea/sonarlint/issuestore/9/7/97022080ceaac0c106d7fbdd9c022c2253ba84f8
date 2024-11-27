@@ -1,0 +1,16 @@
+
+n	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ÿ•n
+H
+java:S1068"&Remove this unused "id" private field.(â¼°Ñûÿÿÿÿ8É Çß¶2
+E
+java:S1068	"(Remove this unused "name" private field.(Ë¥¼8É Çß¶2
+I
+java:S1068",Remove this unused "userType" private field.(ĞÄû8É Çß¶2
+H
+java:S1068"+Remove this unused "emailId" private field.(˜•ö8É Çß¶2
+I
+java:S1068",Remove this unused "mobileNo" private field.(îš…8É Çß¶2
+M
+java:S1068"+Remove this unused "address" private field.(÷§ùÿÿÿÿ8É Çß¶2
+G
+java:S1068"*Remove this unused "active" private field.(Åş…Í8É Çß¶2

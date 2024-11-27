@@ -1,0 +1,14 @@
+
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÛŸ‰õ8ßô»¶2
+l
+java:S36556"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ùáË_8àô»¶2
+m
+java:S36555"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ÑˆµØ8àô»¶2
+b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ó“‹¨8áô»¶2
+g	java:S112="FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8áô»¶2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ãô»¶2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ãô»¶2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ãô»¶2

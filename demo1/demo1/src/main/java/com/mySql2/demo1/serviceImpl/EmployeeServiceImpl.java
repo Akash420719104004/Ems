@@ -1,17 +1,25 @@
 package com.mySql2.demo1.serviceImpl;
-import com.mySql2.demo1.model.dtos.EmployeeDto;
+import com.mySql2.demo1.model.User;
 import com.mySql2.demo1.model.Employee;
+import com.mySql2.demo1.model.dtos.EmployeeDto;
+import com.mySql2.demo1.model.dtos.EmployeeUpdateDto;
+import com.mySql2.demo1.model.dtos.ResponseEmployeeDto;
 import com.mySql2.demo1.repository.EmployeeRepository;
+import com.mySql2.demo1.repository.UserRespositorty;
 import com.mySql2.demo1.responses.SuccessResponse;
 import com.mySql2.demo1.serviceImpl.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class  EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    UserRespositorty userRespositorty;
     @Override
     public SuccessResponse<Object> addEmployees(EmployeeDto employeeDto) {
         try {
@@ -34,11 +42,40 @@ public class  EmployeeServiceImpl implements EmployeeService {
             }
             employee.setMobileNo(employeeDto.getMobileNo());
             employee.setName(employeeDto.getName());
+            employee.setPosition(employeeDto.getPosition());
+            employee.setSalary(employeeDto.getSalary());
+            employee.setDepartment(employeeDto.getDepartment());
             employeeRepository.save(employee);
             return response;
         } catch (RuntimeException e) {
             throw new RuntimeException("Error occurred while adding/updating employee: " + e.getMessage(), e);
         }
+    }
+    @Override
+    public Employee updateEmployess(EmployeeUpdateDto employeeUpdateDto) {
+     Employee employee=employeeRepository.findById(employeeUpdateDto.getId()).orElseThrow(()->new RuntimeException("Employee Not Found"));
+        List<User>userList=userRespositorty.findByIdIn(Collections.singletonList(employeeUpdateDto.getId()));
+        Collections.reverse(userList);
+        employee.setUpdatedAt(employeeUpdateDto.getModifiedAt());
+        employee.setUpdatedBy(employeeUpdateDto.getModifiedBy());
+        employeeRepository.save(employee);
+        return employee;
+    }
+
+    @Override
+    public ResponseEmployeeDto getEmployee(Long id) {
+       ResponseEmployeeDto responseEmployeeDto=new ResponseEmployeeDto();
+        Employee employee=employeeRepository.findById(id).orElseThrow(()->new RuntimeException("Employee Not Found"));
+         responseEmployeeDto.setName(employee.getName());
+         responseEmployeeDto.setSalary(employee.getSalary());
+         responseEmployeeDto.setPosition(employee.getPosition());
+         responseEmployeeDto.setCreatedBy(employee.getCreatedBy());
+         responseEmployeeDto.setCreatedAt(employee.getCreatedAt());
+         responseEmployeeDto.setUpdatedAt(employee.getUpdatedAt());
+         responseEmployeeDto.setUpdatedBy(employee.getUpdatedBy());
+         responseEmployeeDto.setDepartment(employee.getDepartment());
+         responseEmployeeDto.setMobileNo(employee.getMobileNo());
+        return responseEmployeeDto;
     }
 }
 

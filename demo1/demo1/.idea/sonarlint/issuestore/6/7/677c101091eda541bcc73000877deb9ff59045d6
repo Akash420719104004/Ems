@@ -1,0 +1,7 @@
+
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ü¨ğ8³Å‘¶2J$afdb4c21-bb8a-4381-9f94-b008a306c433
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8äßç¶2J$dd2b935f-7f54-430e-92ab-c2f9da30aaf0
+›
+java:S1128
+"SRemove this unused import 'org.springframework.web.bind.annotation.RestController'.(±íş¡şÿÿÿÿ8èßç¶2J$8f72a2ba-f63c-4e67-8263-7b04fe234756

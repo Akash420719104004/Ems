@@ -1,0 +1,20 @@
+
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÛŸ‰õ8øº”¶2J$a579220d-a018-4efd-ac4e-3d155002fc91
+ˆ	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ìƒ¨€8øº”¶2J$75841fde-e585-456f-8126-10c8cfea9774
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8øº”¶2J$ba13c738-c593-4a0c-b41a-fd6051cc10bd
+
+java:S1128">Remove this unused import 'jakarta.mail.internet.MimeMessage'.(š‹ÔÕ8ùº”¶2J$fe5fc2f1-d931-4bc5-b833-27f79b8fab4d
+Š
+java:S1128
+"GRemove this unused import 'org.springframework.core.io.ResourceLoader'.(çàÉÇ8ùº”¶2J$6796f068-0ecd-4479-ad81-8c087a8b0951
+
+java:S1128"MRemove this unused import 'org.springframework.mail.javamail.JavaMailSender'.(ÕÃ›8ùº”¶2J$6ede9ea1-6f9c-45c2-91e9-a0ee6088d445
+˜
+java:S1128"PRemove this unused import 'org.springframework.mail.javamail.MimeMessageHelper'.(Ö€”÷øÿÿÿÿ8ùº”¶2J$f221b701-2d3c-46cb-99bf-6e4fe8f35061
+}
+java:S1128"5Remove this unused import 'java.nio.charset.Charset'.(ü¶ØŸıÿÿÿÿ8ùº”¶2J$c9c2f688-ff88-4847-8bd7-e4008cd80c49
+|
+java:S1128"4Remove this unused import 'java.util.LinkedHashMap'.(ò†ŠŞùÿÿÿÿ8ùº”¶2J$ca98e144-087f-421c-bd87-7dab124fcaf3
+r
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8ùº”¶2J$cb9bbd66-edf4-4bd7-a7c7-c7f28ecfa03e
