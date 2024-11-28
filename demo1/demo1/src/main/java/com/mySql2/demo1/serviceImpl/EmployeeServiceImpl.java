@@ -1,8 +1,6 @@
 package com.mySql2.demo1.serviceImpl;
-import com.mySql2.demo1.model.User;
 import com.mySql2.demo1.model.Employee;
 import com.mySql2.demo1.model.dtos.EmployeeDto;
-import com.mySql2.demo1.model.dtos.EmployeeUpdateDto;
 import com.mySql2.demo1.model.dtos.ResponseEmployeeDto;
 import com.mySql2.demo1.repository.EmployeeRepository;
 import com.mySql2.demo1.repository.UserRespositorty;
@@ -11,7 +9,6 @@ import com.mySql2.demo1.serviceImpl.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -51,16 +48,6 @@ public class  EmployeeServiceImpl implements EmployeeService {
             throw new RuntimeException("Error occurred while adding/updating employee: " + e.getMessage(), e);
         }
     }
-    @Override
-    public Employee updateEmployess(EmployeeUpdateDto employeeUpdateDto) {
-     Employee employee=employeeRepository.findById(employeeUpdateDto.getId()).orElseThrow(()->new RuntimeException("Employee Not Found"));
-        List<User>userList=userRespositorty.findByIdIn(Collections.singletonList(employeeUpdateDto.getId()));
-        Collections.reverse(userList);
-        employee.setUpdatedAt(employeeUpdateDto.getModifiedAt());
-        employee.setUpdatedBy(employeeUpdateDto.getModifiedBy());
-        employeeRepository.save(employee);
-        return employee;
-    }
 
     @Override
     public ResponseEmployeeDto getEmployee(Long id) {
@@ -76,6 +63,21 @@ public class  EmployeeServiceImpl implements EmployeeService {
          responseEmployeeDto.setDepartment(employee.getDepartment());
          responseEmployeeDto.setMobileNo(employee.getMobileNo());
         return responseEmployeeDto;
+    }
+
+    @Override
+    public String deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
+        return "Employee Deleted Successfully";
+    }
+
+    @Override
+    public List<Employee> getAllEmployee(String search) {
+        if (search != null && !search.isEmpty()) {
+            return employeeRepository.findBysearch(search);
+        } else {
+            return employeeRepository.findAll();
+        }
     }
 }
 

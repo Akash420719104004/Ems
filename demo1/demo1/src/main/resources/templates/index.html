@@ -4,11 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Management</title>
-    <!-- Bootstrap CSS for styling -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General page styling */
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .container {
+            margin-top: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 30px;
+            color: #5c6bc0;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .form-group input {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .btn-info {
+            background-color: #2196f3;
+            border-color: #2196f3;
+        }
+
+        .btn-info:hover {
+            background-color: #0b79d0;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            border-color: #f44336;
+        }
+
+        .btn-danger:hover {
+            background-color: #e53935;
+        }
+
+        .btn {
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #f9f9f9;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #e3f2fd;
+            color: #2196f3;
+        }
+
+        table td {
+            background-color: #ffffff;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f1f8e9;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f8ff;
+        }
+
+        /* Alert Styling */
+        .alert {
+            margin-top: 20px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            table th, table td {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<div class="container mt-5">
+<div class="container">
     <h2>Employee Management</h2>
 
     <!-- Add / Update Employee Form -->
@@ -37,7 +161,7 @@
             <label for="salary">Salary</label>
             <input type="number" class="form-control" id="salary" placeholder="Enter Salary" required>
         </div>
-        <button type="submit" class="btn btn-primary" id="submitBtn">Add Employee</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Add/Update Employee</button>
     </form>
 
     <hr>
@@ -50,25 +174,47 @@
         <button class="btn btn-info mt-2" id="searchBtn">Search</button>
     </div>
 
-    <!-- Employee Details -->
-    <div id="employeeDetails" style="display:none;">
-        <h3>Employee Details</h3>
-        <p id="employeeInfo"></p>
+    <!-- Delete Employee Section -->
+    <h3>Delete Employee</h3>
+    <div class="form-group">
+        <label for="deleteId">Enter Employee ID to Delete</label>
+        <input type="number" class="form-control" id="deleteId" placeholder="Employee ID">
+        <button class="btn btn-danger mt-2" id="deleteBtn">Delete</button>
     </div>
 
+    <hr>
+
+    <!-- Get All Employees -->
+    <h3>All Employees</h3>
+    <button class="btn btn-info" id="getAllBtn">Load All Employees</button>
+
+    <!-- Employee Table -->
+    <table class="table table-bordered mt-3" id="employeeTable" style="display:none;">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+        </tr>
+        </thead>
+        <tbody id="employeeTableBody">
+        <!-- Employee rows will be inserted here dynamically -->
+        </tbody>
+    </table>
 </div>
 
-<!-- Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script>
     // Add or Update Employee
-    document.getElementById('employeeForm').addEventListener('submit', function(e) {
+    document.getElementById('employeeForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Capture form data
         const id = document.getElementById('id').value;
         const name = document.getElementById('name').value;
         const mobileNo = document.getElementById('mobileNo').value;
@@ -76,71 +222,108 @@
         const department = document.getElementById('department').value;
         const salary = document.getElementById('salary').value;
 
-        // Prepare employee data
         const employeeData = {
-            id: id ? id : null,  // If ID exists, include it for updating
+            id: id ? id : null,
             name: name,
             mobileNo: mobileNo,
             position: position,
             department: department,
             salary: salary,
-            createdBy: 'Admin',  // Use a default value or dynamic user information
-            updatedBy: 'Admin'   // Use a default value or dynamic user information
+            createdBy: 'Admin',  // Adjust accordingly to your use case
+            updatedBy: 'Admin'   // Adjust accordingly to your use case
         };
 
-        const url = id ? `/api/employees/updateEmployee/${id}` : `/api/employees/addEmployee`;  // Update if ID exists
-        const method = id ? 'PUT' : 'POST';  // Use PUT for updating, POST for adding
+        const url = id ? `/api/employees/addEmployee` : `/api/employees/addEmployee`;  // This URL works for both add and update
 
-        // Send the POST or PUT request
-        axios({
-            method: method,
-            url: url,
-            data: employeeData
-        })
-        .then(response => {
-            alert('Employee Added/Updated Successfully');
-            console.log(response);  // Debug: check the response from the server
-            document.getElementById('employeeForm').reset();
-            document.getElementById('id').value = '';  // Reset ID field after submission
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error while submitting data');
-            // You can log the error for better debugging
-            console.log(error.response ? error.response.data : error);
-        });
+        axios.post(url, employeeData)
+            .then(response => {
+                alert(response.data.statusMessage);
+                document.getElementById('employeeForm').reset();
+                document.getElementById('id').value = '';  // Reset the ID field after submission
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error occurred while adding/updating employee.');
+            });
     });
 
     // Search Employee by ID
-    document.getElementById('searchBtn').addEventListener('click', function() {
+    document.getElementById('searchBtn').addEventListener('click', function () {
         const searchId = document.getElementById('searchId').value;
-
         if (!searchId) {
-            alert('Please enter an employee ID to search.');
+            alert('Please enter an employee ID.');
             return;
         }
 
         axios.get(`/api/employees/getEmployee?id=${searchId}`)
             .then(response => {
                 const employee = response.data;
-                document.getElementById('employeeInfo').innerHTML = `
-                    Name: ${employee.name}<br>
-                    Position: ${employee.position}<br>
-                    Department: ${employee.department}<br>
-                    Mobile: ${employee.mobileNo}<br>
-                    Salary: ${employee.salary}<br>
-                    Created By: ${employee.createdBy}<br>
-                    Created At: ${employee.createdAt}<br>
-                    Updated By: ${employee.updatedBy}<br>
-                    Updated At: ${employee.updatedAt}
-                `;
-                document.getElementById('employeeDetails').style.display = 'block';
+                if (employee) {
+                    alert(`Employee Found: ${employee.name}`);
+                } else {
+                    alert('Employee not found.');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error while fetching employee details');
+                alert('Error occurred while searching for employee.');
+            });
+    });
+
+    // Delete Employee by ID
+    document.getElementById('deleteBtn').addEventListener('click', function () {
+        const deleteId = document.getElementById('deleteId').value;
+        if (!deleteId) {
+            alert('Please enter an employee ID to delete.');
+            return;
+        }
+
+        axios.delete(`/api/employees/deleteEmployee?id=${deleteId}`)
+            .then(response => {
+                alert('Employee Deleted Successfully');
+                document.getElementById('deleteId').value = ''; // Reset the input field
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error occurred while deleting employee.');
+            });
+    });
+
+    // Get All Employees
+    document.getElementById('getAllBtn').addEventListener('click', function () {
+        axios.get('/api/employees/getAllEmployee?search=')
+            .then(response => {
+                const employees = response.data;
+                const tableBody = document.getElementById('employeeTableBody');
+                tableBody.innerHTML = '';  // Clear the table before adding new data
+
+                if (employees.length === 0) {
+                    alert('No employees found.');
+                } else {
+                    employees.forEach(employee => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${employee.id}</td>
+                            <td>${employee.name}</td>
+                            <td>${employee.mobileNo}</td>
+                            <td>${employee.position}</td>
+                            <td>${employee.department}</td>
+                            <td>${employee.salary}</td>
+                            <td>${employee.createdAt}</td>
+                            <td>${employee.updatedAt}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+
+                    document.getElementById('employeeTable').style.display = 'table';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error occurred while loading all employees.');
             });
     });
 </script>
 </body>
+
 </html>

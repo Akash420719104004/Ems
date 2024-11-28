@@ -7,7 +7,11 @@ import com.mySql2.demo1.responses.SuccessResponse;
 import com.mySql2.demo1.serviceImpl.service.EmployeeService;
 import com.mySql2.demo1.serviceImpl.service.UserDeviceIdService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -24,5 +28,15 @@ public class UserDeviceController {
     @GetMapping("/getEmployee")
     public ResponseEmployeeDto getEmployee(@RequestParam Long id){
         return employeeService.getEmployee(id);
+    }
+    @DeleteMapping("deleteEmployee")
+    public ResponseEntity<String> deleteEmployee(Long id){
+        String deleteEmployee= employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(deleteEmployee, HttpStatus.OK);
+    }
+    @GetMapping("/getAllEmployee")
+    public ResponseEntity<List<Employee> >getAllEmployee(@RequestParam String search){
+       List<Employee> employee= employeeService.getAllEmployee(search);
+       return new ResponseEntity<>(employee,HttpStatus.OK);
     }
 }
